@@ -22,11 +22,18 @@ def read_rel(path_to_rel):
         it = iter(f.readlines())
         for raw_row in it:
             # TODO: only need to do this for first row
-            try:
-                split_row = [int(val) for val in raw_row.split(",")]
-                rows.append([int(val) for val in split_row])
-            except ValueError:
-                print("skipped header")
+            split = raw_row.split(",")
+            row = []
+            for s in split:
+                try:
+                    row.append(int(s))
+                    # split_row = [int(val) for val in raw_row.split(",")]
+                    # rows.append([int(val) for val in split_row])
+                except ValueError:
+                    row.append(0)
+                    # print("skipped header")
+            print(row)
+            rows.append(row)
     return rows
 
 

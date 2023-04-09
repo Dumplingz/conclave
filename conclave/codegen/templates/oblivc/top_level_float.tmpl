@@ -183,6 +183,7 @@ void join
 	int joinColTwo
 	)
 {
+	printf("join started\n");
 
 	int numColsOne = matOne->cols;
 	int numColsTwo = matTwo->cols;
@@ -200,6 +201,8 @@ void join
 
 	for (int i = 0; i < numRowsOne; i++)
 	{
+		printf("joining... %i\n", i);
+
 		for (int j = 0; j < numRowsTwo; j++)
 		{
 			array[currentRow] = calloc(numOutCols, sizeof(obliv float));

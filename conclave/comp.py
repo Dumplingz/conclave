@@ -131,6 +131,7 @@ class DagRewriter:
         self.reverse = False
 
     def rewrite(self, dag: ccdag.OpDag):
+        # print("dag: ", dag)
         """ Traverse topologically sorted DAG, inspect each node. """
         ordered = dag.top_sort()
         if self.reverse:
@@ -570,7 +571,7 @@ class TrustSetPropDown(DagRewriter):
         >>> cols_in = [defCol("a", "INTEGER", 1, 2), defCol("b", "INTEGER", 1)]
         >>> in_op = cc.create("rel", cols_in, {1})
         >>> agged = cc.aggregate(in_op, "agged", ["a"], "b", "sum", "total_b")
-        >>> TrustSetPropDown()._rewrite_aggregate(agged)
+        >>> TrustSetPropDown(cc_conf.CodeGenConfig())._rewrite_aggregate(agged)
         >>> agged.out_rel.columns[0].dbg_str()
         'a {1 2}'
         >>> agged.out_rel.columns[1].dbg_str()
@@ -598,7 +599,7 @@ class TrustSetPropDown(DagRewriter):
         >>> cols_in = [defCol("a", "INTEGER", 1, 2), defCol("b", "INTEGER", 1, 3)]
         >>> in_op = cc.create("rel", cols_in, {1})
         >>> div = cc.divide(in_op, "div", "a", ["a", "b"])
-        >>> TrustSetPropDown()._rewrite_divide(div)
+        >>> TrustSetPropDown(cc_conf.CodeGenConfig())._rewrite_divide(div)
         >>> div.out_rel.columns[0].dbg_str()
         'a {1}'
         >>> div.out_rel.columns[1].dbg_str()
@@ -613,7 +614,7 @@ class TrustSetPropDown(DagRewriter):
         >>> cols_in = [defCol("a", "INTEGER", 1, 2), defCol("b", "INTEGER", 3)]
         >>> in_op = cc.create("rel", cols_in, {1})
         >>> proj = cc.project(in_op, "proj", ["b", "a"])
-        >>> TrustSetPropDown()._rewrite_project(proj)
+        >>> TrustSetPropDown(cc_conf.CodeGenConfig())._rewrite_project(proj)
         >>> proj.out_rel.columns[0].dbg_str()
         'b {3}'
         >>> proj.out_rel.columns[1].dbg_str()
@@ -632,7 +633,7 @@ class TrustSetPropDown(DagRewriter):
         >>> cols_in = [defCol("a", "INTEGER", 1, 2), defCol("b", "INTEGER", 1), defCol("c", "INTEGER", 3)]
         >>> in_op = cc.create("rel", cols_in, {1})
         >>> filt = cc.cc_filter(in_op, "filt", "a", "==", "b")
-        >>> TrustSetPropDown()._rewrite_filter(filt)
+        >>> TrustSetPropDown(cc_conf.CodeGenConfig())._rewrite_filter(filt)
         >>> filt.out_rel.columns[0].dbg_str()
         'a {1}'
         >>> filt.out_rel.columns[1].dbg_str()
@@ -657,7 +658,7 @@ class TrustSetPropDown(DagRewriter):
         >>> cols_in_keys = [defCol("k", "INTEGER", 1, 2, 3)]
         >>> keys_op = cc.create("keys", cols_in_keys, {1})
         >>> filt = cc.filter_by(in_op, "filt", "a", keys_op)
-        >>> TrustSetPropDown()._rewrite_filter_by(filt)
+        >>> TrustSetPropDown(cc_conf.CodeGenConfig())._rewrite_filter_by(filt)
         >>> filt.out_rel.columns[0].dbg_str()
         'a {1 2 3}'
         >>> filt.out_rel.columns[1].dbg_str()
@@ -679,7 +680,7 @@ class TrustSetPropDown(DagRewriter):
         >>> cols_in = [defCol("a", "INTEGER", 1, 2), defCol("b", "INTEGER", 1, 3)]
         >>> in_op = cc.create("rel", cols_in, {1})
         >>> div = cc.multiply(in_op, "div", "a", ["a", "b"])
-        >>> TrustSetPropDown()._rewrite_multiply(div)
+        >>> TrustSetPropDown(cc_conf.CodeGenConfig())._rewrite_multiply(div)
         >>> div.out_rel.columns[0].dbg_str()
         'a {1}'
         >>> div.out_rel.columns[1].dbg_str()
@@ -700,7 +701,7 @@ class TrustSetPropDown(DagRewriter):
         >>> left = cc.create("left", cols_in_left, {1})
         >>> right = cc.create("right", cols_in_right, {2})
         >>> joined = cc.join(left, right, "joined", ["a"], ["c"])
-        >>> TrustSetPropDown()._rewrite_join(joined)
+        >>> TrustSetPropDown(cc_conf.CodeGenConfig())._rewrite_join(joined)
         >>> joined.out_rel.columns[0].dbg_str()
         'a {1}'
         >>> joined.out_rel.columns[1].dbg_str()
@@ -748,7 +749,7 @@ class TrustSetPropDown(DagRewriter):
         >>> left = cc.create("left", cols_in_left, {1})
         >>> right = cc.create("right", cols_in_right, {2})
         >>> unioned = cc.union(left, right, "unioned", "a", "c")
-        >>> TrustSetPropDown()._rewrite_union(unioned)
+        >>> TrustSetPropDown(cc_conf.CodeGenConfig())._rewrite_union(unioned)
         >>> unioned.out_rel.columns[0].dbg_str()
         'a {1 2 3}'
         """
@@ -763,7 +764,7 @@ class TrustSetPropDown(DagRewriter):
         >>> cols_in_left = [defCol("a", "INTEGER", 1, 2, 3), defCol("b", "INTEGER", 1)]
         >>> left = cc.create("left", cols_in_left, {1})
         >>> intersected = cc._pub_intersect(left, "intersected", "a")
-        >>> TrustSetPropDown()._rewrite_pub_intersect(intersected)
+        >>> TrustSetPropDown(cc_conf.CodeGenConfig())._rewrite_pub_intersect(intersected)
         >>> intersected.out_rel.columns[0].dbg_str()
         'a {1 2 3}'
         """
@@ -780,7 +781,7 @@ class TrustSetPropDown(DagRewriter):
         >>> left = cc.create("left", cols_in_left, {2})
         >>> right = cc.create("right", cols_in_right, {3})
         >>> rel = cc.concat([left, right], "rel")
-        >>> TrustSetPropDown()._rewrite_concat(rel)
+        >>> TrustSetPropDown(cc_conf.CodeGenConfig())._rewrite_concat(rel)
         >>> rel.out_rel.columns[0].dbg_str()
         'a {1}'
         >>> rel.out_rel.columns[1].dbg_str()

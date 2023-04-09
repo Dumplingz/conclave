@@ -37,7 +37,9 @@ def generate_code(protocol: callable, cfg: CodeGenConfig, mpc_frameworks: list,
 
         # only apply optimizations if required
         if apply_optimizations:
+            # print("dag pre-opt: ", dag)
             dag = comp.rewrite_dag(dag, cfg)
+            # print("dag post-opt: ", dag)
 
         # partition into sub-dags that will run in specific frameworks
         mapping = part.heupart(dag, mpc_frameworks, local_frameworks)
