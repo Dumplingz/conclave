@@ -32,7 +32,7 @@ def read_rel(path_to_rel):
                 except ValueError:
                     row.append(0)
                     # print("skipped header")
-            print(row)
+            # print(row)
             rows.append(row)
     return rows
 
