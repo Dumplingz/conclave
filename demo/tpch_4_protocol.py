@@ -8,7 +8,6 @@ from conclave import workflow
 
 
 def protocol():
-
     """Customer"""
     customer_cols = "c_custkey,c_name,c_address,c_nationkey,c_phone,c_acctbal,c_mktsegment,c_comment"
     customer_cols = customer_cols.split(",")
@@ -33,27 +32,38 @@ def protocol():
     cols_in_two = [defCol(i, "INTEGER", 2) for i in lineitem_cols]
     lineitem_two = cc.create("lineitem1", cols_in_two, {2})
     
+    """SELECT o_orderpriority, COUNT(*) AS order_count
+  FROM orders
+ WHERE o_orderdate >= MDY (7, 1, 1993)
+   AND o_orderdate < MDY (7, 1, 1993) + 3 UNITS MONTH
+   AND EXISTS (
+      SELECT *
+        FROM lineitem
+       WHERE l_orderkey = o_orderkey
+         AND l_commitdate < l_receiptdate
+     )
+GROUP BY o_orderpriority
+ORDER BY o_orderpriority
+
+    """
+
+    # lineitem_two = cc.create("lineitem_cc_100_two", cols_in_two, {2})
+    
+        
+    customer = cc.concat([customer_one, customer_two], "customer")
+    # orders = cc.concat([orders_one, orders_two], "orders")
     lineitem = cc.concat([lineitem_one, lineitem_two], "lineitem")
+    # supplier = cc.concat([], "supplier")
 
-    """SELECT
-    SUM(l_extendedprice * l_discount) AS revenue
-FROM
-    lineitem
-WHERE
-    l_shipdate >= MDY(1,1,1994)
-    AND l_shipdate < MDY(1,1,1994) + 1 UNITS YEAR
-    AND l_discount BETWEEN .06 - 0.01 AND .06 + 0.010001
-    AND l_quantity < 24
-"""
+    """SELECT COUNT(*) FROM orders, lineitem WHERE l_orderkey = o_orderkey GROUP BY o_orderpriority"""
 
-    """SELECT SUM(l_extendedprice * l_discount) FROM lineitem WHERE l_quantity == 24"""
+    custkey = cc.join(customer, lineitem, "custkey", ["l_orderkey"], ["o_orderkey"])
+    agged = cc.aggregate_count(custkey, "count", ["o_orderpriority"], "order_count")
+    cc.collect(agged, 1)
 
-    mult = cc.multiply(lineitem, "mult", "revenue", ["l_extendedprice", "l_discount"])
-    filtered = cc.cc_filter(mult, "filtered", "l_quantity", "==", None, 24)
-    cc.collect(filtered, 1)
+    return {customer_one, customer_two, lineitem_one, lineitem_two}
 
-    return {lineitem_one, lineitem_two}
-
+    # return {lineitem_one, lineitem_two}
 
 def party_two_thread(config_path, protocol, data_path):
     """
@@ -73,7 +83,7 @@ if __name__ == "__main__":
 
     input_size = "1MB"
 
-    out_file = input_size + "_tpch_6_out.txt"
+    out_file = input_size + "_tpch_5_out.txt"
 
     data_path_one = "/home/cc/conclave/demo/tpch_one/" + input_size
     data_path_two = "/home/cc/conclave/demo/tpch_two/" + input_size
