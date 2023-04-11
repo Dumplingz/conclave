@@ -63,8 +63,10 @@ def aggregate_count(rel, group_by_idx):
 
 
 def arithmetic_project(rel, target_col_idx, f):
-    return [[value if idx != target_col_idx else f(row) for idx, value in enumerate(row)] for row in rel]
-
+    def insert_and_ret_list(list):
+        list.insert(target_col_idx, f(list))
+        return list
+    return [insert_and_ret_list(row) for row in rel]
 
 def project_indeces(rel):
     return [[idx] + rest for (idx, rest) in enumerate(rel)]

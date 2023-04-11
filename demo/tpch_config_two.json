@@ -5,7 +5,7 @@
 		"all_pids": [1,2],
 		"leaky_ops": 0,
 		"workflow_name": "example",
-		"use_floats": 1,
+		"use_floats": 0,
 		"paths":
 		{
 			"input_path": "/home/cc/conclave/demo/tpch_two"
