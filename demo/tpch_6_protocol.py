@@ -49,8 +49,7 @@ WHERE
     """SELECT (l_extendedprice * l_discount) AS revenue FROM lineitem WHERE l_quantity == 24"""
 
     mult = cc.multiply(lineitem, "mult", "revenue", ["l_extendedprice", "l_discount"])
-    filtered = cc.cc_filter(mult, "filtered", "l_quantity", "<", None, 24)
-    # cc.collect(mult, 1)
+    filtered = cc.cc_filter(mult, "filtered", "l_quantity", "==", None, 24)
     cc.collect(filtered, 1)
 
     return {lineitem_one, lineitem_two}
