@@ -24,8 +24,11 @@ int main(int argc, char **argv)
     io.in.cols = COLS;
     io.in.rows = ROWS;
 
+	printf("loading data %s...\n", inSrc);
     loadData(&io.in.mat, inSrc);
+	printf("displaying data...\n");
     displayData(&io);
+	printf("done with data...\n");
 
 	printf("Connecting to %s on port %s ...\n", remote_host, port);
     if("{{{PID}}}" == "1")
@@ -44,6 +47,7 @@ int main(int argc, char **argv)
         exit(1);
       }
     }
+	printf("done connecting\n");
 
 	setCurrentParty(&pd,{{{PID}}});
 

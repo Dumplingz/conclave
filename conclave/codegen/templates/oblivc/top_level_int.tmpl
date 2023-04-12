@@ -213,9 +213,12 @@ void join
 	obliv int *keepRows = malloc(sizeof(obliv int) * maxOutRows);
 
 	int currentRow = 0;
+	printf("sizeof obliv int %i\n", sizeof(obliv int));
+	printf("numrowsone: %i, numrowstwo: %i\n", numRowsOne, numRowsTwo);
 
 	for (int i = 0; i < numRowsOne; i++)
 	{
+		printf("joining row %i\n", i);
 		for (int j = 0; j < numRowsTwo; j++)
 		{
 			array[currentRow] = calloc(numOutCols, sizeof(obliv int));

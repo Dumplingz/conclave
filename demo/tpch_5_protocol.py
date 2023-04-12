@@ -22,7 +22,7 @@ def protocol():
     cols_in_one = [defCol(i, "INTEGER", 1) for i in orders_cols]
     orders_one = cc.create("orders0", cols_in_one, {1})
     cols_in_two = [defCol(i, "INTEGER", 2) for i in orders_cols]
-    orders_two = cc.create("orders1", cols_in_two, {2})
+    orders_two = cc.create("orders1_75", cols_in_two, {2})
 
     """Lineitem"""
     lineitem_cols = "l_orderkey,l_partkey,l_suppkey,l_linenumber,l_quantity,l_extendedprice,l_discount,l_tax,l_returnflag,l_linestatus,l_shipdate,l_commitdate,l_receiptdate,l_shipinstruct,l_shipmode,l_comment"
@@ -44,14 +44,16 @@ def protocol():
     ORDER BY revenue DESC
     """    
         
-    customer = cc.concat([customer_one, customer_two], "customer")
-    orders = cc.concat([orders_one, orders_two], "orders")
+    # customer = cc.concat([customer_one, customer_two], "customer")
+    # orders = cc.concat([orders_one, orders_two], "orders")
 
     """SELECT * FROM customer, orders WHERE c_custkey = o_custkey"""
-    custkey = cc.join(customer, orders, "custkey", ["c_custkey"], ["o_custkey"])
+    # custkey = cc.join(customer_one, orders_two, "custkey", ["c_custkey"], ["o_custkey"])
+    custkey = cc.join(customer_one, orders_two, "custkey", ["c_custkey"], ["o_custkey"])
     cc.collect(custkey, 1)
 
-    return {customer_one, customer_two, orders_one, orders_two}
+    # return {customer_one, customer_two, orders_one, orders_two}
+    return {customer_one, orders_two}
 
     # return {lineitem_one, lineitem_two}
 

@@ -88,8 +88,8 @@ class OblivCDispatcher:
 
         cmd = "{}/bash.sh".format(job.code_dir)
 
-        print("{}: {}/bash.sh dispatching Obliv-C job. "
-              .format(job.name, job.code_dir))
+        print("{}: {}/bash.sh dispatching Obliv-C job. {}"
+              .format(job.name, job.code_dir, time.strftime("%Y-%m-%d %H:%M:%S",time.gmtime())))
 
         try:
             call(["/bin/bash", cmd])

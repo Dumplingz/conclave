@@ -75,8 +75,9 @@ def run(protocol: callable, conf, mpc_framework: str = "obliv-c",
     Load parameters from config & dispatch computation.
     Downloads files if necessary from either Dataverse or Swift
     """
-
+    print("setup")
     conclave_config = setup(conf)
+    print("setup done, generating and dispatching")
 
     generate_and_dispatch(
         protocol, conclave_config, [mpc_framework], [local_framework], apply_optimizations=apply_optimisations
