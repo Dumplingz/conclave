@@ -22,7 +22,7 @@ def party_thread(config_path, protocol, data_path):
     return
 
 if __name__ == "__main__":
-    num_trials = 10
+    num_trials = 1
     permitted_file_sizes = ["1MB", "10MB", "100MB", "1GB"]
     permitted_tpch_queries = {"1":t1p.protocol,"4":t4p.protocol,"5":t5p.protocol,"6":t6p.protocol}
 
