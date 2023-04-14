@@ -37,8 +37,8 @@ if __name__ == "__main__":
     if tpch_num not in list(permitted_tpch_queries.keys()):
         raise Exception("Not supported tpch query number")
 
-    data_path_one = "/home/cc/conclave/demo/tpch_one/" + input_size
-    data_path_two = "/home/cc/conclave/demo/tpch_two/" + input_size
+    data_path_one = "/home/chz_uchicago_edu/conclave/demo/tpch_one/" + input_size
+    data_path_two = "/home/chz_uchicago_edu/conclave/demo/tpch_two/" + input_size
 
     out_file = input_size + "_tpch_{}_out.txt".format(tpch_num)
     protocol = permitted_tpch_queries[tpch_num]
