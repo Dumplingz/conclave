@@ -1,5 +1,5 @@
 #!/bin/bash
-tpchnum=1
+tpchnum=6
 
 for filesize in 10MB 100MB 1GB
 do

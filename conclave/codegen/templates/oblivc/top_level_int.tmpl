@@ -102,15 +102,19 @@ void matToObliv
 	int numRows = ocBroadcastInt(io->rows, party);
 	int numCols = ocBroadcastInt(io->cols, party);
 
+	printf("numrows: %i, numcols: %i, party: %i\n", numRows, numCols, party);
+
 	obliv int **array = malloc(sizeof(*array) * numRows);
 	obliv int *keepRows = malloc(sizeof(obliv int) * numRows);
 
 	for (int i = 0; i < numRows; i++)
 	{
+
 		array[i] = malloc(sizeof(obliv int) * numCols);
 		keepRows[i] = 1;
 		for (int j = 0; j < numCols; j++)
 		{
+
 			array[i][j] = feedOblivInt(io->mat[i][j], party);
 		}
 	}
@@ -119,6 +123,7 @@ void matToObliv
 	ret->cols = numCols;
 	ret->mat = array;
 	ret->keepRows = keepRows;
+	printf("finished loading\n");
 }
 
 void concat
@@ -218,7 +223,7 @@ void join
 
 	for (int i = 0; i < numRowsOne; i++)
 	{
-		printf("joining row %i\n", i);
+		//printf("joining row %i\n", i);
 		for (int j = 0; j < numRowsTwo; j++)
 		{
 			array[currentRow] = calloc(numOutCols, sizeof(obliv int));
