@@ -60,7 +60,7 @@ def protocol():
     # return {customer_one, customer_two, orders_one, orders_two}
     # return {orders_one, orders_two}
 
-    return {lineitem_one, lineitem_two}
+    return {orders_one, orders_two}
 
 def party_two_thread(config_path, protocol, data_path):
     """
