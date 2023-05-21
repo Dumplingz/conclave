@@ -59,8 +59,10 @@ ORDER BY o_orderpriority
     
     # Steven: select count (*) from o1, o2 where o1.key = o2.key group by o_orderpriority
 
-    partkey = cc.join(lineitem_one, lineitem_two, "partkey", ["l_partkey"], ["l_partkey"])
-    agged = cc.aggregate_count(partkey, "count", ["l_quantity"], "count")
+    custkey = cc.join(orders_one, orders_two, "custkey", ["o_custkey"], ["o_custkey"])
+
+    # partkey = cc.join(lineitem_one, lineitem_two, "partkey", ["l_partkey"], ["l_partkey"])
+    agged = cc.aggregate_count(custkey, "count", ["o_orderpriority"], "count")
     cc.collect(agged, 1)
 
     return {lineitem_one, lineitem_two}
