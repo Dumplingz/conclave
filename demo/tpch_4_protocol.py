@@ -65,7 +65,7 @@ ORDER BY o_orderpriority
     agged = cc.aggregate_count(custkey, "count", ["o_orderpriority"], "count")
     cc.collect(agged, 1)
 
-    return {lineitem_one, lineitem_two}
+    return {orders_one, orders_two}
 
     # return {lineitem_one, lineitem_two}
 
