@@ -50,18 +50,20 @@ ORDER BY o_orderpriority
     # lineitem_two = cc.create("lineitem_cc_100_two", cols_in_two, {2})
     
         
-    customer = cc.concat([customer_one, customer_two], "customer")
+    # customer = cc.concat([customer_one, customer_two], "customer")
     # orders = cc.concat([orders_one, orders_two], "orders")
-    lineitem = cc.concat([lineitem_one, lineitem_two], "lineitem")
+    # lineitem = cc.concat([lineitem_one, lineitem_two], "lineitem")
     # supplier = cc.concat([], "supplier")
 
-    """SELECT COUNT(*) FROM orders, lineitem WHERE l_orderkey = o_orderkey GROUP BY o_orderpriority"""
+    """SELECT COUNT(*) FROM lineitem_one, lineitem_two WHERE l_partkey = l_partkey GROUP BY l_quantity"""
+    
+    # Steven: select count (*) from o1, o2 where o1.key = o2.key group by o_orderpriority
 
-    custkey = cc.join(customer, lineitem, "custkey", ["l_orderkey"], ["o_orderkey"])
-    agged = cc.aggregate_count(custkey, "count", ["o_orderpriority"], "order_count")
+    partkey = cc.join(lineitem_one, lineitem_two, "partkey", ["l_partkey"], ["l_partkey"])
+    agged = cc.aggregate_count(partkey, "count", ["l_quantity"], "count")
     cc.collect(agged, 1)
 
-    return {customer_one, customer_two, lineitem_one, lineitem_two}
+    return {lineitem_one, lineitem_two}
 
     # return {lineitem_one, lineitem_two}
 
