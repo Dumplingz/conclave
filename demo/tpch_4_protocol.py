@@ -63,7 +63,8 @@ ORDER BY o_orderpriority
 
     # partkey = cc.join(lineitem_one, lineitem_two, "partkey", ["l_partkey"], ["l_partkey"])
     agged = cc.aggregate_count(custkey, "count", ["o_orderpriority"], "count")
-    cc.collect(agged, 1)
+    sorted = cc.sort_by(agged, "sorted", "o_orderpriority")
+    cc.collect(sorted, 1)
 
     return {orders_one, orders_two}
 
