@@ -51,17 +51,17 @@ def protocol():
     # custkey = cc.join(customer_one, orders_two, "custkey", ["c_custkey"], ["o_custkey"])
 
     """SELECT * FROM orders_one, orders_two WHERE o_custkey = o_custkey"""
-    # custkey = cc.join(orders_one, orders_two, "custkey", ["o_custkey"], ["o_custkey"])
+    custkey = cc.join(orders_one, orders_two, "custkey", ["o_custkey"], ["o_custkey"])
 
     """SELECT * FROM lineitem_one, lineitem_two WHERE l_partkey = l_partkey"""
-    custkey = cc.join(lineitem_one, lineitem_two, "custkey", ["l_partkey"], ["l_partkey"])
+    # custkey = cc.join(lineitem_one, lineitem_two, "custkey", ["l_partkey"], ["l_partkey"])
     cc.collect(custkey, 1)
 
     # return {customer_one, customer_two, orders_one, orders_two}
     # return {orders_one, orders_two}
 
-    # return {orders_one, orders_two}
-    return {lineitem_one, lineitem_two}
+    return {orders_one, orders_two}
+    # return {lineitem_one, lineitem_two}
 
 def party_two_thread(config_path, protocol, data_path):
     """
