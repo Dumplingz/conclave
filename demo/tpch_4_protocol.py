@@ -55,7 +55,7 @@ ORDER BY o_orderpriority
     # lineitem = cc.concat([lineitem_one, lineitem_two], "lineitem")
     # supplier = cc.concat([], "supplier")
 
-    """SELECT COUNT(*) FROM lineitem_one, lineitem_two WHERE l_partkey = l_partkey GROUP BY l_quantity"""
+    """SELECT * FROM orders_one, orders_two WHERE o_custkey = o_custkey, o_orderpriority == 3"""
     
     # Steven: select count (*) from o1, o2 where o1.key = o2.key group by o_orderpriority
 
