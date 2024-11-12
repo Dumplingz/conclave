@@ -170,7 +170,7 @@ class SalmonPeer:
 
                 # create connection
                 # using deprecated asyncio.async for 3.4.3 support
-                conn = asyncio.async(_create_connection_retry(
+                conn = asyncio.ensure_future(_create_connection_retry(
                     lambda: SalmonProtocol(self), other_host, other_port))
 
                 self.peer_connections[other_pid] = conn

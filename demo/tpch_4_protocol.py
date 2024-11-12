@@ -64,7 +64,7 @@ ORDER BY o_orderpriority
     # partkey = cc.join(lineitem_one, lineitem_two, "partkey", ["l_partkey"], ["l_partkey"])
     # agged = cc.aggregate_count(custkey, "count", ["o_orderpriority"], "count")
     filtered = cc.cc_filter(custkey, "filtered", "o_orderpriority", "==", None, 3)
-
+    
     # sorted = cc.sort_by(agged, "sorted", "o_orderpriority")
     cc.collect(filtered, 1)
 
@@ -85,8 +85,8 @@ def party_two_thread(config_path, protocol, data_path):
 
 if __name__ == "__main__":
 
-    party_one_config = "tpch_config_one.json"
-    party_two_config = "tpch_config_two.json"
+    party_one_config = "demo/tpch_config_one.json"
+    party_two_config = "demo/tpch_config_two.json"
 
     input_size = "1MB"
 

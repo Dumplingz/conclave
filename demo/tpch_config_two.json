@@ -8,14 +8,14 @@
 		"use_floats": 0,
 		"paths":
 		{
-			"input_path": "/home/cc/conclave/demo/tpch_two"
+			"input_path": "/home/cc/chz-sok/conclave/demo/data"
 		}
 	},
 	"net":
 	{
 		"parties": [
-			{"host": "0.0.0.0", "port": 9001},
-			{"host": "0.0.0.0", "port": 9002}
+			{"host": "0.0.0.0", "port": 9008},
+			{"host": "0.0.0.0", "port": 9009}
 		]
 	},
 	"backends":
