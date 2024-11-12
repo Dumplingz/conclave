@@ -1,0 +1,31 @@
+{
+	"user_config":
+	{
+		"pid": 2,
+		"all_pids": [1,2],
+		"leaky_ops": 0,
+		"workflow_name": "example",
+		"use_floats": 0,
+		"paths":
+		{
+			"input_path": "/home/cc/chz-sok/conclave/demo/data"
+		}
+	},
+	"net":
+	{
+		"parties": [
+			{"host": "0.0.0.0", "port": 9008},
+			{"host": "0.0.0.0", "port": 9009}
+		]
+	},
+	"backends":
+	{
+		"oblivc":
+		{
+			"available": 1,
+			"oc_path": "/home/cc/obliv-c/bin/oblivcc",
+			"party_count": "2",
+			"ip_port": "localhost:1234"
+		}
+	}
+}

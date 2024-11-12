@@ -1,7 +1,7 @@
 import os
 import csv
 
-def import_tpch_data(filepath_in, filepath_out, datasize, transforms, header = None):
+def import_tpch_data(filepath_in, filepath_out, transforms, header = None):
     """
     imports data into directories tpch_one and tpch_two
     """
@@ -14,6 +14,8 @@ def import_tpch_data(filepath_in, filepath_out, datasize, transforms, header = N
         output_rows = []
         
         for row in reader:
+            # remove final row because it is empty in tpch data
+            row.pop()
             # error if transforms is not of same shape
             if len(row) < len(transforms):
                 # error
@@ -41,7 +43,7 @@ def import_tpch_data(filepath_in, filepath_out, datasize, transforms, header = N
 
             output_rows.append(row)
             # Open the output CSV file and write the output rows
-    with open(f"tpch_one/{datasize}/{filepath_out}", 'w', newline='') as output_file:
+    with open(filepath_out, 'w', newline='') as output_file:
         writer = csv.writer(output_file)
         writer.writerows(output_rows)
 
@@ -57,7 +59,11 @@ if __name__ == "__main__":
         filepath_in_one = f"../../tpch_workdir/{datasize}/split0.5/orders1.tbl"
         filepath_in_two = f"../../tpch_workdir/{datasize}/split0.5/orders2.tbl"
         
+        filepath_out_one = f"tpch_one/{datasize}/orders1.csv"
+        filepath_out_two = f"tpch_two/{datasize}/orders2.csv"
+                
         # 1|37|O|131251.81|1996-01-02|5-LOW|Clerk#000000951|0|nstructions sleep furiously among |
+        # 1,37,0,131252,0,0,0,0,0,0
         transforms = [None, None, 'delete', 'round', 'delete', 'delete', 'delete', None, 'delete']
-        import_tpch_data(filepath_in_one, f"orders1.csv", datasize, transforms)
-        import_tpch_data(filepath_in_two, f"orders2.csv", datasize, transforms)
+        import_tpch_data(filepath_in_one, filepath_out_one, transforms)
+        import_tpch_data(filepath_in_two, filepath_out_two, transforms)
