@@ -59,14 +59,17 @@ ORDER BY o_orderpriority
     
     # Steven: select count (*) from o1, o2 where o1.key = o2.key group by o_orderpriority
 
-    custkey = cc.join(orders_one, orders_two, "custkey", ["o_custkey"], ["o_custkey"])
+    distinct_one = cc.distinct(orders_one, "distinct_one", ["o_custkey"])
+    distinct_two = cc.distinct(orders_two, "distinct_two", ["o_custkey"])
+
+    custkey = cc.join(distinct_one, distinct_two, "custkey", ["o_custkey"], ["o_custkey"])
 
     # partkey = cc.join(lineitem_one, lineitem_two, "partkey", ["l_partkey"], ["l_partkey"])
     # agged = cc.aggregate_count(custkey, "count", ["o_orderpriority"], "count")
-    filtered = cc.cc_filter(custkey, "filtered", "o_orderpriority", "==", None, 3)
+    # filtered = cc.cc_filter(custkey, "filtered", "o_orderpriority", "==", None, 0)
     
     # sorted = cc.sort_by(agged, "sorted", "o_orderpriority")
-    cc.collect(filtered, 1)
+    cc.collect(custkey, 1)
 
     return {orders_one, orders_two}
 
@@ -84,18 +87,19 @@ def party_two_thread(config_path, protocol, data_path):
     return
 
 if __name__ == "__main__":
+    num_trials = 1
 
     party_one_config = "tpch_config_one.json"
     party_two_config = "tpch_config_two.json"
 
-    input_size = "1MB"
+    input_size = "1GB"
 
-    out_file = input_size + "_tpch_5_out.txt"
+    out_file = input_size + "join.csv"
 
-    data_path_one = "/home/cc/chz-sok/conclave/demo/tpch_one/" + input_size
-    data_path_two = "/home/cc/chz-sok/conclave/demo/tpch_two/" + input_size
+    data_path_one = "/home/cc/chz-sok/conclave/join/tpch_one/" + input_size
+    data_path_two = "/home/cc/chz-sok/conclave/join/tpch_two/" + input_size
 
-    for i in range(10):
+    for i in range(num_trials):
 
         party_two_process = Process(target=party_two_thread, args=[party_two_config, protocol, data_path_two])
         party_two_process.start()
