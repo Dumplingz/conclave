@@ -92,7 +92,7 @@ if __name__ == "__main__":
     party_one_config = "tpch_config_one.json"
     party_two_config = "tpch_config_two.json"
 
-    input_size = "1GB"
+    input_size = "1MB"
 
     out_file = input_size + "join.csv"
 
