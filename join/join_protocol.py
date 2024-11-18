@@ -87,12 +87,16 @@ def party_two_thread(config_path, protocol, data_path):
     return
 
 if __name__ == "__main__":
-    num_trials = 1
+    # input_size = "1MB"
+    # num_trials = 1
+
+    input_size = sys.argv[1]
+    num_trials = int(sys.argv[2])
+    
 
     party_one_config = "tpch_config_one.json"
     party_two_config = "tpch_config_two.json"
 
-    input_size = "1MB"
 
     out_file = input_size + "join.csv"
 
