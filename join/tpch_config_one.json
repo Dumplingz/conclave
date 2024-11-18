@@ -23,7 +23,7 @@
 		"oblivc":
 		{
 			"available": 1,
-			"oc_path": "/home/cc/obliv-c/bin/oblivcc",
+			"oc_path": "/home/chz_uchicago_edu/obliv-c/bin/oblivcc",
 			"party_count": "2",
 			"ip_port": "localhost:1234"
 		}
