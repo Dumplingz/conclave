@@ -96,8 +96,8 @@ if __name__ == "__main__":
 
     out_file = input_size + "join.csv"
 
-    data_path_one = "/home/cc/chz-sok/conclave/join/tpch_one/" + input_size
-    data_path_two = "/home/cc/chz-sok/conclave/join/tpch_two/" + input_size
+    data_path_one = "/home/chz_uchicago_edu/data-pooling-experiments/conclave/join/tpch_one/" + input_size
+    data_path_two = "/home/chz_uchicago_edu/data-pooling-experiments/conclave/join/tpch_two/" + input_size
 
     for i in range(num_trials):
 
