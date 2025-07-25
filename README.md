@@ -4,7 +4,7 @@ This repository is a fork of the original Conclave repository. It contains the e
 ## Setup
 This repository is a submodule of the data-pooling-experiments repository. The tpch data should be set up in that repository before running the experiments in this repository.
 
-To run conclave, you will need the required Python packages installed in `requirements.txt`.
+This repository was tested using Python 3.7 (switched to this version using pyenv). Install the required packages in `requirements.txt`.
 
 Additionally, you will need to install `obliv-c`: https://github.com/samee/obliv-c.
 
