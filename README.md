@@ -1,3 +1,29 @@
+# A Fork of the Conclave repository
+This repository is a fork of the original Conclave repository. It contains the experimental results in the paper "Running Functions on Pooled Data without Leakage: Comparing Solutions Over Scope, Trust, and Performance" for Conclave, along with the scripts used to run the experiments.
+
+## Setup
+This repository is a submodule of the data-pooling-experiments repository. The tpch data should be set up in that repository before running the experiments in this repository.
+
+To run conclave, you will need the required Python packages installed in `requirements.txt`.
+
+Additionally, you will need to install `obliv-c`: https://github.com/samee/obliv-c.
+
+Next, add the path to the `conclave` directory to your `PYTHONPATH` environment variable. You can do this by running the following command in your terminal:
+```bash
+export PYTHONPATH=$PYTHONPATH:<path to conclave on your machine>
+```
+
+Then, run the `tpch_data_import.py` script in the `join` directory.
+
+
+Once the previous steps have been completed, run the `join_protocol.py` file in the `join` directory. The CLI inputs for the script are as follows:
+```bash
+python join_protocol.py ['1MB'...'100MB'] [num_trials]
+```
+
+
+
+
 # Conclave
 
 Infrastructure for defining and running large data workflows against multiple backends.
